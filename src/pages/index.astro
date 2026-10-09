@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import AppLink from '../components/AppLink.astro';
+import Screenshot from '../components/Screenshot.astro';
+import { features } from '../data/features';
+import { site, absoluteUrl } from '../config/site';
+import ipad from '../../Images/Screenshots/ipad-13/03-saved.png';
+const schema = {
+  '@context': 'https://schema.org', '@type': 'MobileApplication',
+  name: 'VidShot', operatingSystem: 'iOS, iPadOS', applicationCategory: 'MultimediaApplication',
+  description: site.description, url: absoluteUrl('/'), image: absoluteUrl('/favicon-192.png'),
+  featureList: features.map(feature => feature.short),
+  ...(site.launchStatus === 'available' ? { installUrl: site.appStoreUrl } : {}),
+};
+const highlights = [features[3], features[4], features[5], features[6], features[8], features[9]];
+const guides = [
+  { number: '01', title: 'Save your first video', description: 'From a supported source to your library.', href: '/guides/save-supported-videos/' },
+  { number: '02', title: 'Take your videos offline', description: 'A little preparation. Playback anywhere.', href: '/guides/watch-offline/' },
+  { number: '03', title: 'Make your library yours', description: 'Folders, file names, and a tidier collection.', href: '/guides/organize-downloads/' },
+];
+---
+<Base title="VidShot — Save videos. Watch offline. For iPhone & iPad." description={site.description} schema={schema}>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="tiny-star" aria-hidden="true">✳</span> YOUR VIDEOS, TO GO</p>
+      <h1 id="hero-title">Save it now.<br />Watch it <span class="highlight">later.</span></h1>
+      <p class="hero-description">The video you want to keep. The moment you want to watch. Bring them together with VidShot for iPhone and iPad.</p>
+      <AppLink />
+      <a class="text-link hero-link" href="#how-it-works">Meet your next video companion <Icon name="arrow" size={20} /></a>
+      <div class="hero-meta"><span><Icon name="check" size={16} /> Save supported videos</span><span><Icon name="check" size={16} /> Watch offline</span></div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-orbit" aria-hidden="true"></div>
+      <div class="hero-screenshot hero-secondary"><Screenshot src={features[1].image} alt="VidShot download sheet with video quality and destination folder options" hero /></div>
+      <div class="hero-screenshot hero-primary"><Screenshot src={features[2].image} alt="VidShot Downloads library with saved videos ready for offline playback" hero /></div>
+      <div class="floating-label"><span class="floating-icon"><Icon name="play" size={17} /></span><span>Good videos.<br /><strong>Always within reach.</strong></span></div>
+      <span class="art-star" aria-hidden="true">✳</span>
+    </div>
+  </section>
+  <div class="benefit-strip"><div class="wrap"><span><Icon name="download" size={19} /> Save for later</span><span><Icon name="play" size={19} /> Play without Wi-Fi</span><span><Icon name="folder" size={19} /> Keep it organized</span><span class="strip-note">Made for your iPhone & iPad</span></div></div>
+
+  <section id="how-it-works" class="section wrap" aria-labelledby="workflow-title">
+    <div class="section-heading"><div><p class="eyebrow">LESS FUSS. MORE PLAY.</p><h2 id="workflow-title">From found to favorite.<br />In three simple steps.</h2></div><p>One app to browse, save, and enjoy the videos you have permission to download.</p></div>
+    <div class="steps">
+      {[
+        { title: 'Find something worth keeping.', body: 'Open a supported source in the built-in browser and find your video.', icon: 'globe' },
+        { title: 'Save it your way.', body: 'Choose an available quality, pick a folder, and start the download.', icon: 'download' },
+        { title: 'Make time for play.', body: 'Once it is saved, open Downloads and watch—even when you are offline.', icon: 'play' },
+      ].map((step, i) => <article class="step"><div class="step-top"><span class="step-number">0{i + 1}</span><Icon name={step.icon} size={27} /></div><h3>{step.title}</h3><p>{step.body}</p></article>)}
+    </div>
+    <p class="small-note">Download availability depends on the source and video. Use VidShot for content you own or have permission to save.</p>
+  </section>
+
+  <section id="features" class="features-section" aria-labelledby="features-title"><div class="section wrap">
+    <div class="section-heading"><div><p class="eyebrow">A BETTER WAY TO WATCH</p><h2 id="features-title">Small details.<br />A whole lot of freedom.</h2></div><p>Settle in, multitask, or wind down. Your player should fit the way you watch.</p></div>
+    <div class="feature-grid">{highlights.map(feature => <article class="feature-card"><span class="feature-icon"><Icon name={feature.icon} size={26} /></span><h3>{feature.short}</h3><p>{feature.description}</p></article>)}</div>
+  </div></section>
+
+  <section id="screenshots" class="section gallery-section" aria-labelledby="gallery-title">
+    <div class="section-heading wrap"><div><p class="eyebrow">TAKE A LOOK AROUND</p><h2 id="gallery-title">Everything in its place.</h2></div><p>Ten features. One video companion.<br /><span class="gallery-hint">Scroll to explore the app <Icon name="arrow" size={18} /></span></p></div>
+    <div class="screenshot-gallery" tabindex="0" role="region" aria-label="VidShot iPhone screenshots. Scroll horizontally to explore all ten features.">
+      {features.map((feature, i) => <figure class="gallery-item"><div class="gallery-image"><Screenshot src={feature.image} alt={`${feature.short}: ${feature.description}`} /></div><figcaption><span class="gallery-number">{String(i + 1).padStart(2, '0')}</span><div><h3>{feature.short}</h3><p>{feature.description}</p></div></figcaption></figure>)}
+    </div>
+  </section>
+
+  <section class="tablet-section wrap" aria-labelledby="tablet-title">
+    <div class="tablet-art"><Screenshot src={ipad} alt="VidShot on iPad showing folders and saved videos in the Downloads library" tablet /></div>
+    <div class="tablet-copy"><p class="eyebrow">SAME APP. MORE ROOM.</p><h2 id="tablet-title">A bigger screen.<br />The same freedom.</h2><p>Find your next watch on iPhone or settle into your saved collection on iPad. VidShot gives your videos a home on both.</p><a class="text-link" href="/guides/watch-offline/">Get ready for offline viewing <Icon name="arrow" size={20} /></a></div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="guides-title">
+    <div class="section-heading"><div><p class="eyebrow">A LITTLE HELP TO GET STARTED</p><h2 id="guides-title">Meet your new routine.</h2></div><a class="text-link" href="/guides/">All guides <Icon name="arrow" size={20} /></a></div>
+    <div class="guide-grid">{guides.map(guide => <a class="guide-card" href={guide.href}><span class="guide-number">GUIDE {guide.number}</span><h3>{guide.title}</h3><p>{guide.description}</p><span class="guide-arrow"><Icon name="arrow" size={24} /></span></a>)}</div>
+  </section>
+
+  <section class="faq-section section wrap" aria-labelledby="faq-title">
+    <div><p class="eyebrow">GOOD QUESTIONS</p><h2 id="faq-title">Before you<br />press play.</h2><p>Here are a few things to know<br />about VidShot.</p></div>
+    <div class="faq-list">
+      <details><summary>When can I download VidShot?<span aria-hidden="true">+</span></summary><p>{site.launchStatus === 'available' ? 'VidShot is available on the App Store. Follow the download link on this page.' : 'VidShot is coming soon on the App Store for iPhone and iPad. The download link will appear here when the app is available.'}</p></details>
+      <details><summary>Can VidShot save videos from every website?<span aria-hidden="true">+</span></summary><p>No. VidShot saves videos from supported sources. Availability depends on the source, video, and available download options. Only download content you own or have permission to save.</p></details>
+      <details><summary>Can I watch without an internet connection?<span aria-hidden="true">+</span></summary><p>Yes. After a video has finished downloading, you can open it in your Downloads library and watch offline. <a href="/guides/watch-offline/">See the offline viewing guide.</a></p></details>
+      <details><summary>Does VidShot work on iPad?<span aria-hidden="true">+</span></summary><p>Yes. VidShot is designed for iPhone and iPad. The screenshots above show the app on both devices.</p></details>
+      <details><summary>Which features require Premium?<span aria-hidden="true">+</span></summary><p>Video trimming and advanced editing, audio, and compression tools require Premium. Pricing and full purchase details will be available in the app at launch.</p></details>
+      <details><summary>How do I keep my downloads organized?<span aria-hidden="true">+</span></summary><p>Use folders, rename files, and move videos into the right collection. Secret Vault lets you keep private videos behind a passcode. <a href="/guides/organize-downloads/">Explore the organization guide.</a></p></details>
+    </div>
+  </section>
+  <section class="closing wrap"><span class="closing-star" aria-hidden="true">✳</span><p class="eyebrow">TAKE THE GOOD STUFF WITH YOU</p><h2>Your next watch.<br />Whenever you want.</h2><p>Save supported videos. Make them yours. Enjoy them offline.</p><AppLink /></section>
+</Base>

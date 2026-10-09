@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../config/site';
+const guides = [
+  { title: 'How to save supported videos', description: 'Find a video, choose an available quality, and save it to your Downloads library.', href: '/guides/save-supported-videos/', time: '3 MIN READ' },
+  { title: 'How to watch videos offline', description: 'Prepare your downloads before you disconnect, then make the most of the player.', href: '/guides/watch-offline/', time: '3 MIN READ' },
+  { title: 'How to organize your downloads', description: 'Give every video a home with folders, helpful file names, and Secret Vault.', href: '/guides/organize-downloads/', time: '3 MIN READ' },
+];
+---
+<Base title="VidShot Guides — Saving, offline playback & organizing videos" description="Learn how to save supported videos, prepare for offline viewing, and organize your video library in VidShot for iPhone and iPad.">
+  <section class="page-section wrap"><p class="eyebrow">GET TO KNOW VIDSHOT</p><h1>A little guidance.<br />A lot more play.</h1><p class="page-intro">Start with the basics. Get comfortable with your library.<br />Make VidShot part of your everyday watching.</p>
+    <div class="guide-index">{guides.map((guide, i) => <a href={guide.href} class="guide-index-item"><span class="index-number">0{i + 1}</span><div><p class="eyebrow">{guide.time}</p><h2>{guide.title}</h2><p>{guide.description}</p></div><Icon name="arrow" size={28} /></a>)}</div>
+    <p class="small-note">{site.launchStatus === 'coming-soon' && 'VidShot is coming soon. '}These guides introduce the app’s features; supported sources and download options can vary.</p>
+  </section>
+</Base>

@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+import AppLink from '../components/AppLink.astro';
+import Icon from '../components/Icon.astro';
+import { site, absoluteUrl } from '../config/site';
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  schema?: Record<string, unknown>;
+}
+const { title, description, noindex = false, schema } = Astro.props;
+const canonical = absoluteUrl(Astro.url.pathname);
+const robots = noindex || !site.indexable ? 'noindex, follow' : 'index, follow';
+const isGuides = Astro.url.pathname.startsWith('/guides');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffdc4d" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="VidShot" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={absoluteUrl('/social-card.png') || '/social-card.png'} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="VidShot. Save it now. Watch it later. For iPhone and iPad." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteUrl('/social-card.png') || '/social-card.png'} />
+    {site.googleVerification && <meta name="google-site-verification" content={site.googleVerification} />}
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header wrap">
+      <a class="brand" href="/" aria-label="VidShot home"><img src="/brand-icon.webp" width="40" height="40" alt="" /> <span>VidShot<span class="brand-dot">.</span></span></a>
+      <nav aria-label="Main navigation">
+        <a href="/#features">Features</a>
+        <a href="/guides/" aria-current={isGuides ? 'page' : undefined}>Guides</a>
+        <a href="/support/" aria-current={Astro.url.pathname === '/support/' ? 'page' : undefined}>Support</a>
+      </nav>
+      <div class="header-status"><span class="status-dot"></span>{site.launchStatus === 'available' ? 'Now available' : 'On its way'}</div>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="site-footer wrap">
+      <div class="footer-top">
+        <div><a class="brand" href="/"><img src="/brand-icon.webp" width="36" height="36" alt="" /> <span>VidShot<span class="brand-dot">.</span></span></a><p>A little more freedom for your videos.</p></div>
+        <AppLink compact />
+      </div>
+      <div class="footer-bottom">
+        <p>© {new Date().getFullYear()} VidShot</p>
+        <nav aria-label="Footer navigation"><a href="/guides/">Guides</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
+        <a class="back-top" href="#main">Back to top <Icon name="arrow" size={16} /></a>
+      </div>
+    </footer>
+  </body>
+</html>

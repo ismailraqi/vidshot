@@ -1,0 +1,15 @@
+---
+import { site } from '../config/site';
+import Icon from './Icon.astro';
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+---
+{site.launchStatus === 'available' && site.appStoreUrl ? (
+  <a class:list={['button', 'button-dark', { compact }]} href={site.appStoreUrl}>
+    <Icon name="download" size={20} /> Download on the App Store
+  </a>
+) : (
+  <span class:list={['coming-soon', { compact }]}>
+    <Icon name="phone" size={20} /> Coming soon on the App Store
+  </span>
+)}

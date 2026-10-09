@@ -1,0 +1,10 @@
+---
+import Placeholder from '../components/Placeholder.astro';
+import { site } from '../config/site';
+---
+<Placeholder title="Support" description="Help and contact information for VidShot for iPhone and iPad.">
+  <h2>Start with a guide</h2><p>Learn about <a href="/guides/save-supported-videos/">saving supported videos</a>, <a href="/guides/watch-offline/">watching offline</a>, and <a href="/guides/organize-downloads/">organizing your downloads</a>.</p>
+  <h2>Contact status</h2>
+  {site.supportEmail ? <p>You can contact the VidShot team at <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>.</p> : <p>A verified support contact has not been published yet. This page will be updated when support is ready.</p>}
+  <h2>App availability</h2><p>{site.launchStatus === 'available' ? 'VidShot is available on the App Store.' : 'VidShot is coming soon on the App Store. A download link will appear on the home page when it is available.'}</p>
+</Placeholder>
