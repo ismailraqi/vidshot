@@ -1,6 +1,6 @@
 # Verification — 9 October 2026
 
-The website is complete locally. GitHub is the source repository; hosting is intentionally pending at the owner’s request. No Vercel deployment or Search Console submission has been performed.
+The initial website verification completed locally and on GitHub, with hosting left pending at the owner’s request. The owner later imported `vidshot-ios` in Vercel and reported a build failure. The configuration repair is recorded below. Search Console submission is still pending.
 
 ## Checks
 
@@ -34,6 +34,12 @@ Reports are in ignored `reports/`: phone/tablet/desktop PNGs and per-page Lighth
 
 ## Remaining launch work
 
-Use an eligible commercial Vercel plan, assign the actual production hostname to `SITE_URL`, verify a hosted preview and staged production build, then publish and connect Git integration. The empty `ismailraqis-projects/vidshot` project uses Node 24.x but has no connected repository or deployments. Build settings are prepared in `vercel.json`.
+Use an eligible commercial Vercel plan, verify a hosted preview and production build, then publish. Vercel supplies the production hostname automatically; `SITE_URL` is an optional override. The owner’s imported project is `ismailraqis-projects/vidshot-ios`, using Astro, `dist`, and Node 24.x. Build settings are also prepared in `vercel.json`.
 
 App Store, support contact, privacy, and terms still need confirmed information. Search Console verification and sitemap submission require an actual live origin and the owner’s Google account. Google software-app rich-result eligibility also requires verified information that is not currently available; no missing price or rating was invented.
+
+## Vercel import build repair
+
+The first Vercel build failed at commit `8cd5add` because the application required a manually configured `SITE_URL`. Configuration now uses `VERCEL_PROJECT_PRODUCTION_URL` when `SITE_URL` is blank, preserving the stable production origin in both Production and Preview. Individual `VERCEL_URL` deployment hostnames are never used as canonical fallbacks.
+
+`package.json` and its lockfile now pin Node to `24.x`, resolving Vercel’s unbounded-major-version warning. Nine regression cases pass via `npm run test:config`, including production without a manual URL, previews remaining unindexable, explicit domain precedence, and rejecting temporary deployment origins. Astro checks pass for 23 files with zero errors, warnings, or hints. Production and Preview build/HTML verification both pass using only the supplied platform production hostname; the final local build is restored to unindexable defaults.

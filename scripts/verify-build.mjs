@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import { readFile, access } from "node:fs/promises";
 
-const origin = process.env.SITE_URL?.replace(/\/$/, "");
+const origin = (
+  process.env.SITE_URL?.trim() ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL.trim()}`
+    : "")
+).replace(/\/$/, "");
 const production = process.env.VERCEL_ENV === "production" && Boolean(origin);
 const finished = [
   "index.html",
@@ -106,7 +111,10 @@ assert.equal(
   production ? 5 : 0,
   "Only finished production pages in sitemap",
 );
-assert.ok(!/\/(support|privacy|terms|404)\/<\/loc>/.test(sitemap), "Placeholders excluded");
+assert.ok(
+  !/\/(support|privacy|terms|404)\/<\/loc>/.test(sitemap),
+  "Placeholders excluded",
+);
 const robots = await readFile("dist/robots.txt", "utf8");
 assert.ok(
   robots.includes(

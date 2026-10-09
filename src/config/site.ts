@@ -10,7 +10,14 @@ function httpsUrl(value: string | undefined, name: string): string {
   return parsed.href;
 }
 
-const configuredOrigin = httpsUrl(env.SITE_URL, "SITE_URL");
+// Vercel supplies the stable production hostname even for preview builds.
+// Never use VERCEL_URL here: it identifies an individual deployment.
+const productionHostname = env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+const configuredOrigin = httpsUrl(
+  env.SITE_URL?.trim() ||
+    (productionHostname ? `https://${productionHostname}` : undefined),
+  "SITE_URL or VERCEL_PROJECT_PRODUCTION_URL",
+);
 const productionUrl = configuredOrigin ? new URL(configuredOrigin).origin : "";
 const appStoreUrl = httpsUrl(env.APP_STORE_URL, "APP_STORE_URL");
 if (appStoreUrl && new URL(appStoreUrl).hostname !== "apps.apple.com") {
@@ -29,7 +36,7 @@ if (launchStatus === "available" && !appStoreUrl) {
 }
 if (env.VERCEL_ENV === "production" && !productionUrl) {
   throw new Error(
-    "Set SITE_URL to the assigned production origin before deploying.",
+    "Set SITE_URL to the production HTTPS origin, or enable access to Vercel System Environment Variables so VERCEL_PROJECT_PRODUCTION_URL is available.",
   );
 }
 
