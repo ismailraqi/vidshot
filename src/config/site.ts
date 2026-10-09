@@ -59,6 +59,7 @@ export const finishedRoutes = [
   "/guides/save-supported-videos/",
   "/guides/watch-offline/",
   "/guides/organize-downloads/",
+  ...(site.supportEmail ? ["/privacy/", "/terms/"] : []),
 ];
 
 export const absoluteUrl = (path: string) =>

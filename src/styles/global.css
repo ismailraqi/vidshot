@@ -865,6 +865,59 @@ main:focus {
 .placeholder-page > .text-link {
   margin-top: 30px;
 }
+.legal-date {
+  margin-top: 20px;
+  font-size: 0.78rem;
+}
+.legal-contents {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 25px 30px;
+  margin-bottom: 38px;
+}
+.legal-contents .eyebrow {
+  margin-bottom: 15px;
+}
+.legal-contents ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px 35px;
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.8rem;
+}
+.legal-contents a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legal-prose section {
+  scroll-margin-top: 30px;
+}
+.legal-prose h2 {
+  line-height: 1.3;
+}
+.legal-prose a {
+  overflow-wrap: anywhere;
+}
+.legal-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 25px;
+  margin-top: 45px;
+  padding-top: 25px;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+@media (max-width: 520px) {
+  .legal-contents {
+    padding: 22px;
+  }
+  .legal-contents ol {
+    grid-template-columns: 1fr;
+  }
+}
 .not-found {
   padding-block: 100px 140px;
   text-align: center;

@@ -1,0 +1,8 @@
+---
+import { site } from '../config/site';
+---
+{site.supportEmail ? (
+  <p>For privacy requests, questions, or legal notices, contact VidShot at <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>. Describe your request and include only the information needed to help us identify the issue. Please do not send passwords, payment-card details, or private videos.</p>
+) : (
+  <p>VidShot’s public privacy and legal contact is being finalized for the app’s launch. Verified contact details will be published on the <a href="/support/">support page</a>. You can already manage local browser data, permissions, and saved files using the controls described in the privacy policy.</p>
+)}

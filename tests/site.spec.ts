@@ -96,14 +96,20 @@ test("keyboard access, placeholders, guide links and 404", async ({ page }) => {
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#main")).toBeFocused();
-  const faq = page.locator("details").filter({ hasText: "Can I watch without an internet connection?" });
+  const faq = page
+    .locator("details")
+    .filter({ hasText: "Can I watch without an internet connection?" });
   await faq.locator("summary").focus();
   await page.keyboard.press("Enter");
   await expect(faq).toHaveAttribute("open", "");
-  const gallery = page.getByRole("region", { name: /VidShot iPhone screenshots/ });
+  const gallery = page.getByRole("region", {
+    name: /VidShot iPhone screenshots/,
+  });
   await gallery.focus();
   await page.keyboard.press("ArrowRight");
-  await expect.poll(() => gallery.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
+  await expect
+    .poll(() => gallery.evaluate((element) => element.scrollLeft))
+    .toBeGreaterThan(0);
   await page.goto("/guides/");
   for (const slug of [
     "save-supported-videos",
@@ -114,7 +120,7 @@ test("keyboard access, placeholders, guide links and 404", async ({ page }) => {
     await expect(page.locator("h1")).toBeVisible();
     await page.getByRole("link", { name: "← All guides" }).click();
   }
-  for (const path of ["support", "privacy", "terms"]) {
+  for (const path of ["support"]) {
     await page.goto(`/${path}/`);
     await expect(
       page.getByText("Placeholder — publication pending"),
@@ -132,3 +138,68 @@ test("keyboard access, placeholders, guide links and 404", async ({ page }) => {
   await page.getByRole("link", { name: /Back to VidShot/ }).click();
   await expect(page.locator("h1")).toHaveText("Save it now.Watch it later.");
 });
+
+for (const viewport of [
+  { name: "phone", width: 390, height: 844 },
+  { name: "desktop", width: 1440, height: 1000 },
+]) {
+  for (const policy of [
+    { path: "privacy", title: "Privacy policy" },
+    { path: "terms", title: "Terms of service" },
+  ]) {
+    test(`${viewport.name}: ${policy.title} navigation and contents`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(viewport);
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.goto("/");
+      await page
+        .getByRole("navigation", { name: "Footer navigation" })
+        .locator(`a[href="/${policy.path}/"]`)
+        .click();
+      await expect(
+        page.getByRole("heading", { name: policy.title, exact: true }),
+      ).toBeVisible();
+      await expect(
+        page.getByText("Pre-launch policy — contact details pending"),
+      ).toBeVisible();
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+        "content",
+        "noindex, follow",
+      );
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
+      const contents = page.getByRole("navigation", {
+        name: `${policy.title} contents`,
+      });
+      const targets = await contents
+        .locator("a")
+        .evaluateAll((links) => links.map((link) => link.getAttribute("href")));
+      for (const target of targets) {
+        expect(target).toMatch(/^#[a-z-]+$/);
+        await expect(page.locator(target!)).toHaveCount(1);
+      }
+      await page.evaluate(() => document.fonts.ready);
+      await mkdir("reports", { recursive: true });
+      await page.screenshot({
+        path: `reports/${policy.path}-${viewport.name}.png`,
+      });
+      await contents.screenshot({
+        path: `reports/${policy.path}-${viewport.name}-contents.png`,
+      });
+      await contents.locator('a[href="#contact"]').focus();
+      await page.keyboard.press("Enter");
+      await expect(page.locator("#contact h2")).toBeInViewport();
+      await page
+        .locator("#contact")
+        .getByRole("link", { name: "support page" })
+        .click();
+      await expect(
+        page.getByRole("heading", { name: "Support", exact: true }),
+      ).toBeVisible();
+    });
+  }
+}

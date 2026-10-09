@@ -1,6 +1,114 @@
 ---
-import Placeholder from '../components/Placeholder.astro';
+import Legal from '../layouts/Legal.astro';
+import LegalContact from '../components/LegalContact.astro';
+import { site } from '../config/site';
+import { legal } from '../config/legal';
+const sections = [
+  { id: 'statement', title: 'Privacy statement' },
+  { id: 'operator', title: 'Who is responsible' },
+  { id: 'summary', title: 'Privacy at a glance' },
+  { id: 'information', title: 'Information handled by the app' },
+  { id: 'advertising', title: 'Advertising and privacy choices' },
+  { id: 'security', title: 'Information security' },
+  { id: 'purposes', title: 'How information is used' },
+  { id: 'providers', title: 'Service providers and disclosures' },
+  { id: 'transfers', title: 'International processing' },
+  { id: 'browsing', title: 'Websites, cookies, and searches' },
+  { id: 'diagnostics', title: 'Diagnostics and analytics' },
+  { id: 'children', title: 'Children and eligibility' },
+  { id: 'rights', title: 'Your privacy rights' },
+  { id: 'california', title: 'California privacy rights' },
+  { id: 'retention', title: 'Retention and deletion' },
+  { id: 'scope', title: 'Scope of this policy' },
+  { id: 'changes', title: 'Policy updates' },
+  { id: 'contact', title: 'Questions and requests' },
+];
 ---
-<Placeholder title="Privacy policy" description="The VidShot privacy policy is being prepared for publication.">
-  <h2>Policy not yet published</h2><p>This placeholder is not a privacy policy. The final policy must describe the app’s actual data practices, service providers, retention, user choices, and verified contact details.</p><p>No claims about data collection, encryption, tracking, or deletion are made by this placeholder. Confirmed privacy information will be published here before the app launches.</p>
-</Placeholder>
+<Legal title="Privacy policy" description="How VidShot handles browser data, saved videos, advertising, purchases, and visits to this website, and the privacy choices available to you." updated={legal.updated} sections={sections} draft={!site.supportEmail}>
+  <section id="statement"><h2>Privacy statement</h2>
+    <p>This policy explains how {legal.companyName} ("VidShot," "we," "us," or "our") handles information when you use our iPhone and iPad app, visit this website, or contact us. It distinguishes information kept on your device from information handled by websites, Apple, advertising services, and our website host.</p>
+    <p>Browser privacy settings and offline playback do not make every interaction anonymous. Read the sections below to understand which services receive information and how to manage your choices.</p>
+  </section>
+  <section id="operator"><h2>Who is responsible</h2>
+    <p>{legal.companyName} is the operator of the VidShot app and this website and is responsible for the information it processes. Apple, Google, Vercel, and websites you choose to visit also process information under their own policies and applicable responsibilities. Our contact status and request instructions appear in the <a href="#contact">contact section</a>.</p>
+  </section>
+  <section id="summary"><h2>Privacy at a glance</h2>
+    <ul>
+      <li>You do not need a VidShot account to browse, manage downloads, or use the player.</li>
+      <li>Browser history, bookmarks, settings, saved files, and library information are managed on your device.</li>
+      <li>Websites and media hosts receive the requests needed to browse and download their content.</li>
+      <li>Ad-supported builds use Google’s advertising and consent services, which can process device, advertising, and diagnostic information.</li>
+      <li>Apple handles App Store purchases; the app uses purchase information to determine Premium access.</li>
+      <li>The VidShot website uses Vercel hosting and does not embed analytics scripts, advertising scripts, or a newsletter form.</li>
+    </ul>
+  </section>
+  <section id="information"><h2>Information handled by the app</h2>
+    <h3>Browser and library information</h3>
+    <p>The app stores browsing history, bookmarks, quick-access entries, preferences, and download records locally. Download records can include a source URL, file name, folder, file size, download status, and playback progress. Saved media files are placed in the app’s local storage so they can be played offline. Local usage counters support free-download limits and feature access.</p>
+    <p>Video trimming and other media tools work with the files you select. If you export to Photos or Files, or share a file, the resulting copy goes to the destination or service you choose. iOS device backups and copies you create outside the app are governed by your device settings and those services.</p>
+    <h3>Network requests and permissions</h3>
+    <p>Browsing and downloading send requests to the selected website or media host. These requests can include your IP address, browser or device headers, the requested URL, a referring page, and relevant session cookies. The app can use a website’s session information to request the media you selected.</p>
+    <p>When a feature needs an iOS permission, such as saving media to Photos, you can allow or refuse the system request and review permissions in Settings. Playback controls, Picture in Picture, background play, playback speed, and the sleep timer use your selected media and playback preferences.</p>
+    <h3>Purchases and information you provide</h3>
+    <p>Apple’s StoreKit supplies product and transaction information used to check, restore, or update Premium access. Apple processes your payment and Apple Account information under its own policies; VidShot does not receive your full payment-card details through StoreKit.</p>
+    <p>If you send us a support or privacy request, we receive the information you choose to include, such as your contact details, message, app version, or diagnostic material. Send only what is needed to resolve your request.</p>
+  </section>
+  <section id="advertising"><h2>Advertising and privacy choices</h2>
+    <p>Ad-supported builds integrate Google Mobile Ads (AdMob) and Google’s User Messaging Platform. Google’s SDK can process IP addresses and approximate location derived from them, device or advertising identifiers, ad interactions, crash information, and performance data. This supports ad delivery, measurement, diagnostics, and advertising-related analytics. See <a href="https://developers.google.com/admob/ios/privacy/data-disclosure">Google’s SDK data disclosures</a> and <a href="https://policies.google.com/privacy">Google’s privacy policy</a>.</p>
+    <p>The app uses Google’s consent flow where applicable and checks whether ads can be requested before initializing advertising. When Google indicates that a privacy-options entry point is required, <strong>Advertising Privacy Choices</strong> is available in the app’s Settings. You can revisit the available consent and advertising choices there.</p>
+    <p>Apple’s tracking authorization is a separate choice. You can change an app’s tracking permission in <strong>iOS Settings → Privacy &amp; Security → Tracking</strong>. Refusing tracking permission does not prevent a website or service from receiving the network information needed to answer your request.</p>
+    <p>The browser’s ad and tracker blocker applies to webpage requests. It does not itself turn off the app’s sponsored placements or replace advertising-consent settings.</p>
+  </section>
+  <section id="security"><h2>Information security</h2>
+    <p>Local files and browser data use iOS app-storage boundaries and system permission controls. You should also protect your device, passcode, backups, and any copies you export. Secret Vault’s passcode gate is a privacy control within the app; it should not be treated as a guarantee of separate file encryption, an encrypted backup, or a recovery service.</p>
+    <p>No device, storage system, or internet connection can be guaranteed completely secure. A website’s connection security also depends on the website and the connection you choose. Keep your device and app updated and avoid sending sensitive files in support requests.</p>
+  </section>
+  <section id="purposes"><h2>How information is used</h2>
+    <p>Information is used to provide browsing and requested downloads; organize and play your files; apply preferences and local usage limits; verify Premium access; provide applicable advertising and consent choices; answer requests; and operate and protect the website.</p>
+    <p>Where a law requires a legal basis, the relevant basis depends on the activity: providing requested functionality or purchases, consent for processing that requires it, permitted legitimate interests in operating and protecting the service, or compliance with legal obligations. Consent can be withdrawn using the applicable permission or privacy controls.</p>
+  </section>
+  <section id="providers"><h2>Service providers and disclosures</h2>
+    <ul>
+      <li><strong>Apple:</strong> App Store distribution, purchases, entitlement verification, and device services. See <a href="https://www.apple.com/legal/privacy/">Apple’s privacy information</a>.</li>
+      <li><strong>Google:</strong> advertising and consent services in ad-supported builds, as described above.</li>
+      <li><strong>Vercel:</strong> delivery and security of this website. Website requests can involve IP addresses, browser and system information, requested pages, and technical records. See <a href="https://vercel.com/legal/privacy-notice">Vercel’s privacy notice</a>.</li>
+      <li><strong>Services you choose:</strong> websites, search engines, media hosts, and export or sharing destinations receive information needed for your interaction and apply their own policies.</li>
+    </ul>
+    <p>If information is held by VidShot, it may also be disclosed when necessary to comply with a valid legal obligation, respond to lawful process, address fraud or security incidents, or protect legal rights. A business transfer may involve relevant records, subject to applicable safeguards and notice requirements. These circumstances do not mean VidShot has a server-side copy of your local video library.</p>
+  </section>
+  <section id="transfers"><h2>International processing</h2>
+    <p>Apple, Google, Vercel, and the websites or sharing services you use may operate in countries other than yours. Their services can therefore involve international processing. Local app storage is separate from those providers’ network and service records. Where applicable law requires safeguards for a transfer controlled by VidShot, those requirements apply to that transfer.</p>
+  </section>
+  <section id="browsing"><h2>Websites, cookies, and searches</h2>
+    <p>Websites opened in the browser can store cookies and website data, request permissions, or use their own analytics and advertising. Search requests go to the search provider used by the browser. That provider can receive the query and ordinary request information. Follow the relevant provider’s privacy settings and policy for its handling of that information.</p>
+    <p>Private browsing uses a non-persistent browser session and does not add visited pages to normal browsing history. It does not hide your connection from the destination website or your network provider, and saving or exporting a file creates a copy that must be managed separately.</p>
+    <p>The browser’s content blocker evaluates blocking rules on your device. It can reduce known advertising and tracking requests but cannot guarantee that every tracker or advertisement is blocked.</p>
+    <p>This website does not set first-party analytics or advertising cookies through its page code. Cookies or processing on external websites are governed by those websites.</p>
+  </section>
+  <section id="diagnostics"><h2>Diagnostics and analytics</h2>
+    <p>No separate product-usage analytics service is enabled in the current app. Technical diagnostic messages can still be generated locally and can include download or error context. Review diagnostic material before sharing it. Apple, Google’s advertising SDK, or the website host can process their own diagnostic or service information. Advertising-related analytics are covered by the advertising section; they are not described as a separate opt-in product-improvement program.</p>
+  </section>
+  <section id="children"><h2>Children and eligibility</h2>
+    <p>Use VidShot only if you meet the app’s published age rating and the age and consent requirements that apply where you live. If a parent or guardian believes a child has provided personal information to VidShot without required permission, they may request review and deletion of information held by us. Device permissions, website settings, and third-party services also have their own age and privacy requirements.</p>
+  </section>
+  <section id="rights"><h2>Your privacy rights</h2>
+    <p>Depending on your location and the law that applies, you may have rights to obtain information about processing, access your information, correct it, request deletion, receive a portable copy, restrict or object to processing, and withdraw consent. You may also have a right to complain to a competent data-protection authority.</p>
+    <p>Device-only records can be managed using the app’s deletion controls. Requests to VidShot concern information held by VidShot; requests about a provider’s own records may need to be made to that provider. We may need limited information to verify a request and will handle it under the requirements and exceptions of applicable law.</p>
+  </section>
+  <section id="california"><h2>California privacy rights</h2>
+    <p>Where the California Consumer Privacy Act applies, eligible California residents may have rights to know and access information, request deletion or correction, limit certain uses of sensitive information, opt out of sale or sharing, use an authorized agent, and exercise their rights without unlawful discrimination.</p>
+    <p>Advertising-related processing can fall within legal definitions of sharing for cross-context behavioral advertising. Use the available advertising privacy choices and tracking controls to manage that processing. The categories, sources, purposes, and providers involved in the current product are described above. This section does not claim that every user or every activity falls within the CCPA.</p>
+  </section>
+  <section id="retention"><h2>Retention and deletion</h2>
+    <p>Local records remain on your device until you remove them or the app’s storage is removed. In the app’s Settings, <strong>Clear History</strong> removes browsing history and <strong>Clear Cache &amp; Cookies</strong> removes browser website data. The browser-data clearing controls do not delete saved downloads or bookmarks; manage those separately in the library and bookmark controls.</p>
+    <p>Delete saved videos in Downloads when you no longer need them. Copies exported to Photos, Files, another app, or a backup must be removed in those destinations. Deleting the app does not cancel an Apple subscription.</p>
+    <p>Support correspondence or other records received by VidShot are retained only as long as needed to address the request, meet applicable legal obligations, or resolve a relevant dispute. Apple, Google, Vercel, and other providers retain their own records under their applicable settings, obligations, and policies; app deletion does not erase those records.</p>
+  </section>
+  <section id="scope"><h2>Scope of this policy</h2>
+    <p>This policy covers VidShot’s app, website, and communications. It does not replace the policies of content websites, search engines, advertising services, Apple, or other providers. Features and data flows can change with app releases; new processing will be reflected in the applicable disclosures.</p>
+  </section>
+  <section id="changes"><h2>Policy updates</h2>
+    <p>We will update this page when the policy changes and revise the date at the top. Where a change requires an additional notice or consent, that requirement will be addressed separately. A privacy notice does not replace consent where consent is required.</p>
+  </section>
+  <section id="contact"><h2>Questions and requests</h2><LegalContact /></section>
+</Legal>

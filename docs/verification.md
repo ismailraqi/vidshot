@@ -34,12 +34,27 @@ Reports are in ignored `reports/`: phone/tablet/desktop PNGs and per-page Lighth
 
 ## Remaining launch work
 
-Use an eligible commercial Vercel plan, verify a hosted preview and production build, then publish. Vercel supplies the production hostname automatically; `SITE_URL` is an optional override. The owner’s imported project is `ismailraqis-projects/vidshot-ios`, using Astro, `dist`, and Node 24.x. Build settings are also prepared in `vercel.json`.
+The owner imported the site into `ismailraqis-projects/vidshot-ios`, and the repaired build is live at `https://vidshot-ios.vercel.app`. It uses Astro, `dist`, and Node 24.x, with `main` deploying through Git integration. Vercel supplies the production hostname automatically; `SITE_URL` is an optional override. Commercial-plan eligibility remains the owner’s hosting follow-up.
 
-App Store, support contact, privacy, and terms still need confirmed information. Search Console verification and sitemap submission require an actual live origin and the owner’s Google account. Google software-app rich-result eligibility also requires verified information that is not currently available; no missing price or rating was invented.
+The App Store link and public contact email still need confirmed information. Privacy and terms now contain pre-launch text, with source/release confirmation described below. Search Console verification and sitemap submission require the owner’s Google account. Google software-app rich-result eligibility also requires verified information that is not currently available; no missing price or rating was invented.
 
 ## Vercel import build repair
 
 The first Vercel build failed at commit `8cd5add` because the application required a manually configured `SITE_URL`. Configuration now uses `VERCEL_PROJECT_PRODUCTION_URL` when `SITE_URL` is blank, preserving the stable production origin in both Production and Preview. Individual `VERCEL_URL` deployment hostnames are never used as canonical fallbacks.
 
 `package.json` and its lockfile now pin Node to `24.x`, resolving Vercel’s unbounded-major-version warning. Nine regression cases pass via `npm run test:config`, including production without a manual URL, previews remaining unindexable, explicit domain precedence, and rejecting temporary deployment origins. Astro checks pass for 23 files with zero errors, warnings, or hints. Production and Preview build/HTML verification both pass using only the supplied platform production hostname; the final local build is restored to unindexable defaults.
+
+## Privacy policy and terms
+
+The privacy and terms placeholders were replaced with original, structured policies using VidShot as the company name supplied by the owner. Coverage includes local browser/library data, permissions, download requests, advertising and consent choices, Apple purchases, website hosting, retention/deletion, privacy rights, permitted use, subscriptions, and consumer protections. External provider guidance is linked within the pages.
+
+The available iOS source was inspected read-only. Its branding differs from VidShot, which was disclosed to the owner before proceeding. Treat it as the reference implementation and confirm its SDKs and data flows match the shipping VidShot build. A detailed source audit is retained only in ignored `reports/legal-source-audit.md`; private app code and identifiers are not published with this website. No contact email, registered address, governing jurisdiction, or vault-encryption promise was invented.
+
+Both policies display a pre-launch contact-pending notice while `SUPPORT_EMAIL` is empty. They emit `noindex` and stay out of the production sitemap. A verified configured email removes the notice, supplies mail links, and adds the two policies to production indexing; previews remain unindexable. The support placeholder remains excluded independently.
+
+- Astro checks: 26 files, zero errors, warnings, or hints.
+- All nine configuration regression cases passed.
+- Production build with contact absent: five sitemap entries; privacy and terms excluded with `noindex`.
+- Production build with a test-only contact: seven sitemap entries, indexable policies, visible contact links, and no contact-pending notice.
+- Default build restored and verified after fixture checks; no fixture origin or email is published.
+- Eight browser tests passed: all existing phone/tablet/desktop flows plus privacy and terms on phone and desktop, every table-of-contents target, keyboard anchor navigation, footer links, contact/support navigation, and horizontal overflow. Policy screenshots were visually inspected and are retained in ignored `reports/`.

@@ -8,17 +8,18 @@ const origin = (
     : "")
 ).replace(/\/$/, "");
 const production = process.env.VERCEL_ENV === "production" && Boolean(origin);
+const legalReady = Boolean(process.env.SUPPORT_EMAIL?.trim());
 const finished = [
   "index.html",
   "guides/index.html",
   "guides/save-supported-videos/index.html",
   "guides/watch-offline/index.html",
   "guides/organize-downloads/index.html",
+  ...(legalReady ? ["privacy/index.html", "terms/index.html"] : []),
 ];
 const unfinished = [
   "support/index.html",
-  "privacy/index.html",
-  "terms/index.html",
+  ...(!legalReady ? ["privacy/index.html", "terms/index.html"] : []),
   "404.html",
 ];
 const titles = new Set();
@@ -108,12 +109,13 @@ assert.ok(!/<script[^>]+src=/.test(home), "No client JavaScript shipped");
 const sitemap = await readFile("dist/sitemap.xml", "utf8");
 assert.equal(
   (sitemap.match(/<loc>/g) || []).length,
-  production ? 5 : 0,
+  production ? finished.length : 0,
   "Only finished production pages in sitemap",
 );
 assert.ok(
-  !/\/(support|privacy|terms|404)\/<\/loc>/.test(sitemap),
-  "Placeholders excluded",
+  !/\/(support|404)\/<\/loc>/.test(sitemap) &&
+    (legalReady || !/\/(privacy|terms)\/<\/loc>/.test(sitemap)),
+  "Unfinished pages excluded",
 );
 const robots = await readFile("dist/robots.txt", "utf8");
 assert.ok(

@@ -1,6 +1,95 @@
 ---
-import Placeholder from '../components/Placeholder.astro';
+import Legal from '../layouts/Legal.astro';
+import LegalContact from '../components/LegalContact.astro';
+import { site } from '../config/site';
+import { legal } from '../config/legal';
+const sections = [
+  { id: 'agreement', title: 'Agreement and scope' },
+  { id: 'eligibility', title: 'Eligibility' },
+  { id: 'license', title: 'App license' },
+  { id: 'permitted-use', title: 'Permitted use and content rights' },
+  { id: 'features', title: 'Features and availability' },
+  { id: 'purchases', title: 'Premium and purchases' },
+  { id: 'subscriptions', title: 'Subscriptions, cancellation, and refunds' },
+  { id: 'files', title: 'Your files and private content' },
+  { id: 'third-parties', title: 'Third-party services and advertising' },
+  { id: 'property', title: 'Intellectual property' },
+  { id: 'privacy', title: 'Privacy' },
+  { id: 'warranties', title: 'Warranties and liability' },
+  { id: 'termination', title: 'Ending use' },
+  { id: 'law', title: 'Applicable law and consumer rights' },
+  { id: 'changes', title: 'Changes to these terms' },
+  { id: 'contact', title: 'Contact' },
+];
 ---
-<Placeholder title="Terms of use" description="The VidShot terms of use are being prepared for publication.">
-  <h2>Terms not yet published</h2><p>This placeholder is not a completed agreement. The final terms must identify the provider and explain permitted use, purchase terms, and other applicable conditions.</p><p>VidShot is intended for saving supported videos you own or have permission to download. Download availability varies by source. Final terms will be published here before the app launches.</p>
-</Placeholder>
+<Legal title="Terms of service" description="Terms for using VidShot’s browser, video downloads, offline player, Premium features, and website." updated={legal.updated} sections={sections} draft={!site.supportEmail}>
+  <section id="agreement"><h2>Agreement and scope</h2>
+    <p>These terms govern your use of the VidShot app and website provided by {legal.companyName} ("VidShot," "we," "us," or "our"). By using them, you agree to these terms. If you do not agree, discontinue use. Purchase terms presented by Apple and any applicable app license also apply to App Store downloads and purchases.</p>
+    {site.launchStatus === 'coming-soon' && <p>The website currently describes an app that is coming soon.</p>}
+    <p>Screenshots and guides explain the app’s features; they are not a guarantee of support for a particular website, video, device version, or future feature.</p>
+  </section>
+  <section id="eligibility"><h2>Eligibility</h2>
+    <p>You must meet the app’s published age rating and applicable local age requirements and have the legal capacity to accept these terms. If your local law allows a parent or guardian to authorize your use, obtain that authorization. You are responsible for following any additional age restrictions attached to content or third-party services.</p>
+  </section>
+  <section id="license"><h2>App license</h2>
+    <p>VidShot is licensed for use on compatible Apple devices under the applicable App Store usage rules and app license. Where no separate custom app license is supplied, Apple’s <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Standard End User License Agreement</a> applies. These terms do not replace mandatory provisions of that license or Apple’s terms.</p>
+    <p>Use the app through authorized distribution channels. Do not redistribute the app, bypass licensing or purchase checks, or interfere with its operation. Restrictions on copying, modification, or reverse engineering apply only to the extent permitted by law and any applicable open-source licenses.</p>
+  </section>
+  <section id="permitted-use"><h2>Permitted use and content rights</h2>
+    <p>Use VidShot to browse and save content you own or are authorized to access and download. Being able to play a video does not establish permission to copy, edit, export, or share it. You are responsible for any permissions required by the content owner, applicable law, and the source’s terms.</p>
+    <ul>
+      <li>Do not use the app to infringe copyright, privacy, or other rights.</li>
+      <li>Do not bypass access controls, paywalls, digital-rights protections, or restrictions imposed by a source.</li>
+      <li>Do not use the app for unlawful content, exploitation, harassment, malware distribution, or interference with another service.</li>
+      <li>Do not misrepresent VidShot as affiliated with or endorsed by a content platform.</li>
+    </ul>
+    <p>VidShot is a browser and media utility. It does not grant rights to third-party content or provide an independent license to the videos you save.</p>
+  </section>
+  <section id="features"><h2>Features and availability</h2>
+    <p>Download availability, formats, quality options, and successful playback depend on the source, file, network, device, storage, and software version. A source may change or stop offering a downloadable file. VidShot does not promise compatibility with every website or uninterrupted downloading.</p>
+    <p>Offline playback requires a completed, usable local download. Picture in Picture, background playback, playback speed, sleep timers, folders, trimming, and other tools are subject to device support and the features available in your installed version and plan.</p>
+    <p>The browser’s content blocker reduces selected webpage advertising and tracking requests. It does not guarantee complete blocking or automatically remove sponsored placements within the app.</p>
+  </section>
+  <section id="purchases"><h2>Premium and purchases</h2>
+    <p>Some functions require Premium, including video trimming and advanced editing, audio, and compression tools. Features, free-tier limits, available subscription periods, prices, currencies, taxes, and any introductory offer are shown in the app and Apple’s purchase confirmation before you authorize a purchase.</p>
+    <p>Apple handles App Store payments. Premium access depends on a verified entitlement associated with your Apple Account. If a purchase is pending or cannot be verified, access may not be available until verification succeeds. Use the app’s restore-purchases control with the relevant Apple Account when needed.</p>
+    <p>Where an optional rewarded advertisement is offered, the displayed offer and successful reward confirmation determine any additional access. Ad availability and reward delivery are not guaranteed.</p>
+  </section>
+  <section id="subscriptions"><h2>Subscriptions, cancellation, and refunds</h2>
+    <p>For auto-renewing subscriptions, renewal and any trial conversion follow the conditions shown at purchase and Apple’s applicable rules. Review the billing period and renewal terms before confirming. Cancellation stops future renewals under those rules; deleting the app does not cancel a subscription.</p>
+    <p>Manage Apple subscriptions in your Apple Account settings. On iPhone or iPad, open <strong>Settings → your name → Subscriptions</strong> and select the relevant subscription. See <a href="https://support.apple.com/en-us/118428">Apple’s cancellation instructions</a>.</p>
+    <p>App Store refund requests are handled through Apple’s process and eligibility rules. See <a href="https://support.apple.com/en-us/118223">Apple’s refund instructions</a>. Nothing here removes a refund, withdrawal, warranty, or other consumer right that cannot be excluded by law.</p>
+  </section>
+  <section id="files"><h2>Your files and private content</h2>
+    <p>You remain responsible for the content you save and for keeping appropriate copies of files you want to retain. Device loss, app removal, storage changes, failed downloads, or file edits can affect availability. Export copies you need and manage any backups separately.</p>
+    <p>Use Secret Vault and its passcode responsibly. A passcode gate within the app is not a promise of separate file encryption, backup, recovery, or protection of copies you export. Keep your device and passcode secure. VidShot does not guarantee recovery of a forgotten passcode or deleted file.</p>
+    <p>Review a file before deleting or replacing it. Copies saved to Photos, Files, another app, or a sharing service are controlled by that destination and may remain after you delete the app’s copy.</p>
+  </section>
+  <section id="third-parties"><h2>Third-party services and advertising</h2>
+    <p>Websites, search engines, media hosts, Apple services, and advertising providers operate independently. Their content, availability, purchase rules, and privacy practices are governed by their own terms. VidShot does not control third-party content or endorse an advertisement simply because it is displayed.</p>
+    <p>Follow the consent and tracking choices offered by the app and iOS. The <a href="/privacy/">privacy policy</a> explains advertising services, browser cookies, website hosting, and other data flows.</p>
+  </section>
+  <section id="property"><h2>Intellectual property</h2>
+    <p>The VidShot name, website, interface, and original app materials are owned by VidShot or their respective licensors. You receive permission to use the service under the applicable terms, not ownership of those materials. Rights to third-party software and content remain with their owners.</p>
+    <p>Third-party names or marks may identify compatibility, a provider, or a source. Their appearance does not establish an affiliation, partnership, or endorsement.</p>
+  </section>
+  <section id="privacy"><h2>Privacy</h2>
+    <p>Read the <a href="/privacy/">privacy policy</a> for details about local data, network requests, permissions, purchases, advertising, retention, and your choices. Agreement to these terms is not a substitute for consent where a law or platform requires a separate privacy choice.</p>
+  </section>
+  <section id="warranties"><h2>Warranties and liability</h2>
+    <p>To the extent permitted by applicable law, the app and website are provided on an "as is" and "as available" basis. We do not promise error-free operation, uninterrupted availability, universal source compatibility, or that a saved file will remain available indefinitely.</p>
+    <p>To the extent permitted by law, VidShot is not responsible for indirect or consequential losses arising from third-party content, unauthorized use, device or network failures, or lost files. These limitations do not exclude liability, remedies, or statutory guarantees that the law does not allow us to exclude or limit.</p>
+  </section>
+  <section id="termination"><h2>Ending use</h2>
+    <p>You can stop using VidShot at any time. Manage any Apple subscription separately and remove local data or exported copies you no longer want to keep.</p>
+    <p>We may restrict access to services we operate where necessary to address unlawful use, a material violation of these terms, fraud, or a security issue, subject to applicable law. The effect on purchases or subscriptions is governed by applicable platform terms and mandatory consumer rights.</p>
+  </section>
+  <section id="law"><h2>Applicable law and consumer rights</h2>
+    <p>These terms apply subject to the laws and mandatory protections that govern your relationship with VidShot. They do not require you to waive a non-waivable right, statutory warranty, or right to bring a claim in a competent court available to you under applicable law.</p>
+    <p>If a provision is unenforceable, the remaining provisions continue to apply to the extent permitted by law. An invalid provision will not be used to remove a protection the law gives you.</p>
+  </section>
+  <section id="changes"><h2>Changes to these terms</h2>
+    <p>We may update these terms to reflect product, platform, or legal changes. The current version and its date will appear here. Material changes will receive any additional notice or acceptance required by applicable law; publishing an update does not remove rights attached to an existing purchase.</p>
+  </section>
+  <section id="contact"><h2>Contact</h2><LegalContact /></section>
+</Legal>

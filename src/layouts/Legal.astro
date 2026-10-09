@@ -1,0 +1,29 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  updated: string;
+  sections: { id: string; title: string }[];
+  draft?: boolean;
+}
+const { title, description, updated, sections, draft = false } = Astro.props;
+---
+<Base title={`${title} — VidShot`} description={description} noindex={draft}>
+  <article class="article wrap legal-page">
+    <header class="article-header">
+      <p class="eyebrow">VIDSHOT · LEGAL</p>
+      <h1>{title}</h1>
+      <p class="article-intro">{description}</p>
+      <p class="legal-date">{draft ? 'Draft updated' : 'Last updated'}: <time datetime={updated}>{new Date(`${updated}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></p>
+    </header>
+    {draft && <aside class="placeholder-notice"><strong>Pre-launch policy — contact details pending</strong><p>VidShot’s public privacy and legal contact will be added before the app launches. The disclosures and terms below describe the current product; the date above identifies this version.</p></aside>}
+    <nav class="legal-contents" aria-label={`${title} contents`}>
+      <p class="eyebrow">ON THIS PAGE</p>
+      <ol>{sections.map(section => <li><a href={`#${section.id}`}>{section.title}</a></li>)}</ol>
+    </nav>
+    <div class="prose legal-prose"><slot /></div>
+    <nav class="legal-related" aria-label="Related legal pages"><a href="/privacy/">Privacy policy</a><a href="/terms/">Terms of service</a><a href="/support/">Contact & support</a></nav>
+  </article>
+</Base>
