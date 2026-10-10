@@ -22,7 +22,7 @@ const sections = [
   { id: 'contact', title: 'Contact' },
 ];
 ---
-<Legal title="Terms of service" description="Terms for using VidShot’s browser, video downloads, offline player, Premium features, and website." updated={legal.updated} sections={sections} draft={!site.supportEmail}>
+<Legal title="Terms of service" description="Terms for using VidShot’s browser, video downloads, offline player, Premium features, and website." updated={legal.termsUpdated} sections={sections} draft={!site.supportEmail}>
   <section id="agreement"><h2>Agreement and scope</h2>
     <p>These terms govern your use of the VidShot app and website provided by {legal.companyName} ("VidShot," "we," "us," or "our"). By using them, you agree to these terms. If you do not agree, discontinue use. Purchase terms presented by Apple and any applicable app license also apply to App Store downloads and purchases.</p>
     {site.launchStatus === 'coming-soon' && <p>The website currently describes an app that is coming soon.</p>}

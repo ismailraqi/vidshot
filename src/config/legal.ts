@@ -1,4 +1,5 @@
 export const legal = {
   companyName: "VidShot",
-  updated: "2026-10-09",
+  privacyUpdated: "2026-10-10",
+  termsUpdated: "2026-10-09",
 };

@@ -8,6 +8,7 @@ const sections = [
   { id: 'operator', title: 'Who is responsible' },
   { id: 'summary', title: 'Privacy at a glance' },
   { id: 'information', title: 'Information handled by the app' },
+  { id: 'feedback', title: 'Feedback and support' },
   { id: 'advertising', title: 'Advertising and privacy choices' },
   { id: 'security', title: 'Information security' },
   { id: 'purposes', title: 'How information is used' },
@@ -24,9 +25,9 @@ const sections = [
   { id: 'contact', title: 'Questions and requests' },
 ];
 ---
-<Legal title="Privacy policy" description="How VidShot handles browser data, saved videos, advertising, purchases, and visits to this website, and the privacy choices available to you." updated={legal.updated} sections={sections} draft={!site.supportEmail}>
+<Legal title="Privacy policy" description="How VidShot handles browser data, saved videos, feedback, advertising, purchases, and website visits, and the privacy choices available to you." updated={legal.privacyUpdated} sections={sections} draft={!site.supportEmail}>
   <section id="statement"><h2>Privacy statement</h2>
-    <p>This policy explains how {legal.companyName} ("VidShot," "we," "us," or "our") handles information when you use our iPhone and iPad app, visit this website, or contact us. It distinguishes information kept on your device from information handled by websites, Apple, advertising services, and our website host.</p>
+    <p>This policy explains how {legal.companyName} ("VidShot," "we," "us," or "our") handles information when you use our iPhone and iPad app, visit this website, or contact us. It distinguishes information kept on your device from information handled by our feedback service, websites, Apple, advertising services, and our website host.</p>
     <p>Browser privacy settings and offline playback do not make every interaction anonymous. Read the sections below to understand which services receive information and how to manage your choices.</p>
   </section>
   <section id="operator"><h2>Who is responsible</h2>
@@ -39,6 +40,7 @@ const sections = [
       <li>Websites and media hosts receive the requests needed to browse and download their content.</li>
       <li>Ad-supported builds use Google’s advertising and consent services, which can process device, advertising, and diagnostic information.</li>
       <li>Apple handles App Store purchases; the app uses purchase information to determine Premium access.</li>
+      <li>Feedback you submit is stored using Google Firebase, with an optional reply email and technical information used to protect the service.</li>
       <li>The VidShot website uses Vercel hosting and does not embed analytics scripts, advertising scripts, or a newsletter form.</li>
     </ul>
   </section>
@@ -53,6 +55,12 @@ const sections = [
     <p>Apple’s StoreKit supplies product and transaction information used to check, restore, or update Premium access. Apple processes your payment and Apple Account information under its own policies; VidShot does not receive your full payment-card details through StoreKit.</p>
     <p>If you send us a support or privacy request, we receive the information you choose to include, such as your contact details, message, app version, or diagnostic material. Send only what is needed to resolve your request.</p>
   </section>
+  <section id="feedback"><h2>Feedback and support</h2>
+    <p>When you submit feedback through VidShot, we collect your message, feedback category, app version, submission timestamp, and reply email address if you choose to provide one. We use this information to answer questions, investigate problems, review suggestions, and improve the app.</p>
+    <p>Feedback is transmitted over HTTPS and stored using Google Firebase Realtime Database. We also use Firebase App Check to protect the feedback service against unauthorized requests and abuse. Firebase processes technical information, such as IP addresses, user-agent information, and app-verification information, to operate and secure these services. See <a href="https://firebase.google.com/support/privacy">Google’s Firebase privacy information</a>.</p>
+    <p>Feedback submissions do not automatically include your browsing history, bookmarks, downloaded videos, or vault contents. Please avoid including passwords, payment details, or other sensitive information in your message.</p>
+    <p>We retain feedback and support submissions until we have addressed the request or resolved the reported issue. Bug reports remain in our feedback database while we investigate and fix the problem. Once the submission has been handled, we delete the message and any associated reply email from our feedback database.</p>
+  </section>
   <section id="advertising"><h2>Advertising and privacy choices</h2>
     <p>Ad-supported builds integrate Google Mobile Ads (AdMob) and Google’s User Messaging Platform. Google’s SDK can process IP addresses and approximate location derived from them, device or advertising identifiers, ad interactions, crash information, and performance data. This supports ad delivery, measurement, diagnostics, and advertising-related analytics. See <a href="https://developers.google.com/admob/ios/privacy/data-disclosure">Google’s SDK data disclosures</a> and <a href="https://policies.google.com/privacy">Google’s privacy policy</a>.</p>
     <p>The app uses Google’s consent flow where applicable and checks whether ads can be requested before initializing advertising. When Google indicates that a privacy-options entry point is required, <strong>Advertising Privacy Choices</strong> is available in the app’s Settings. You can revisit the available consent and advertising choices there.</p>
@@ -64,13 +72,13 @@ const sections = [
     <p>No device, storage system, or internet connection can be guaranteed completely secure. A website’s connection security also depends on the website and the connection you choose. Keep your device and app updated and avoid sending sensitive files in support requests.</p>
   </section>
   <section id="purposes"><h2>How information is used</h2>
-    <p>Information is used to provide browsing and requested downloads; organize and play your files; apply preferences and local usage limits; verify Premium access; provide applicable advertising and consent choices; answer requests; and operate and protect the website.</p>
+    <p>Information is used to provide browsing and requested downloads; organize and play your files; apply preferences and local usage limits; verify Premium access; provide applicable advertising and consent choices; answer questions, investigate problems, review suggestions, and improve the app; and operate and protect the feedback service and website.</p>
     <p>Where a law requires a legal basis, the relevant basis depends on the activity: providing requested functionality or purchases, consent for processing that requires it, permitted legitimate interests in operating and protecting the service, or compliance with legal obligations. Consent can be withdrawn using the applicable permission or privacy controls.</p>
   </section>
   <section id="providers"><h2>Service providers and disclosures</h2>
     <ul>
       <li><strong>Apple:</strong> App Store distribution, purchases, entitlement verification, and device services. See <a href="https://www.apple.com/legal/privacy/">Apple’s privacy information</a>.</li>
-      <li><strong>Google:</strong> advertising and consent services in ad-supported builds, as described above.</li>
+      <li><strong>Google:</strong> advertising and consent services in ad-supported builds, and Firebase Realtime Database and App Check for feedback storage and service protection, as described above.</li>
       <li><strong>Vercel:</strong> delivery and security of this website. Website requests can involve IP addresses, browser and system information, requested pages, and technical records. See <a href="https://vercel.com/legal/privacy-notice">Vercel’s privacy notice</a>.</li>
       <li><strong>Services you choose:</strong> websites, search engines, media hosts, and export or sharing destinations receive information needed for your interaction and apply their own policies.</li>
     </ul>
@@ -102,7 +110,8 @@ const sections = [
   <section id="retention"><h2>Retention and deletion</h2>
     <p>Local records remain on your device until you remove them or the app’s storage is removed. In the app’s Settings, <strong>Clear History</strong> removes browsing history and <strong>Clear Cache &amp; Cookies</strong> removes browser website data. The browser-data clearing controls do not delete saved downloads or bookmarks; manage those separately in the library and bookmark controls.</p>
     <p>Delete saved videos in Downloads when you no longer need them. Copies exported to Photos, Files, another app, or a backup must be removed in those destinations. Deleting the app does not cancel an Apple subscription.</p>
-    <p>Support correspondence or other records received by VidShot are retained only as long as needed to address the request, meet applicable legal obligations, or resolve a relevant dispute. Apple, Google, Vercel, and other providers retain their own records under their applicable settings, obligations, and policies; app deletion does not erase those records.</p>
+    <p>Feedback and support submissions follow the retention and deletion practices in the <a href="#feedback">Feedback and support section</a>. Clearing local app data does not delete a submission already sent to our feedback database.</p>
+    <p>Other records received in privacy or legal requests are retained only as long as needed to address the request, meet applicable legal obligations, or resolve a relevant dispute. Apple, Google, Vercel, and other providers retain their own records under their applicable settings, obligations, and policies; app deletion does not erase those records.</p>
   </section>
   <section id="scope"><h2>Scope of this policy</h2>
     <p>This policy covers VidShot’s app, website, and communications. It does not replace the policies of content websites, search engines, advertising services, Apple, or other providers. Features and data flows can change with app releases; new processing will be reflected in the applicable disclosures.</p>
