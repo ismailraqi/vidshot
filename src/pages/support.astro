@@ -1,10 +1,29 @@
 ---
 import Placeholder from '../components/Placeholder.astro';
+import Base from '../layouts/Base.astro';
 import { site } from '../config/site';
 ---
+{site.supportEmail ? (
+  <Base title="Support — VidShot" description="Help and contact information for VidShot for iPhone and iPad." noindex>
+    <section class="page-section wrap">
+      <p class="eyebrow">VIDSHOT · HELP</p><h1>Support</h1>
+      <div class="prose">
+        <h2>Help with VidShot</h2>
+        <p>Read our guides to <a href="/guides/save-supported-videos/">saving supported videos</a>, <a href="/guides/watch-offline/">watching offline</a>, and <a href="/guides/organize-downloads/">organizing your downloads</a>.</p>
+        <h2>Contact us</h2>
+        <p>For support, privacy requests, or questions about these terms, email <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>. Include your app version, device model, and a description of the problem. Do not send passwords, payment-card details, or private videos.</p>
+        <h2>Premium subscriptions</h2>
+        <p>Manage or cancel subscriptions in your Apple Account’s subscription settings. Deleting VidShot does not cancel a subscription. Use Restore in the Premium screen to check eligible purchases associated with your Apple Account.</p>
+        <p>Read the <a href="/privacy/">Privacy Policy</a> and <a href="/terms/">Terms of service</a> for more information.</p>
+      </div>
+      <a class="text-link" href="/">← Back to VidShot</a>
+    </section>
+  </Base>
+) : (
 <Placeholder title="Support" description="Help and contact information for VidShot for iPhone and iPad.">
   <h2>Start with a guide</h2><p>Learn about <a href="/guides/save-supported-videos/">saving supported videos</a>, <a href="/guides/watch-offline/">watching offline</a>, and <a href="/guides/organize-downloads/">organizing your downloads</a>.</p>
   <h2>Contact status</h2>
   {site.supportEmail ? <p>You can contact the VidShot team at <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>.</p> : <p>A verified support contact has not been published yet. This page will be updated when support is ready.</p>}
   <h2>App availability</h2><p>{site.launchStatus === 'available' ? 'VidShot is available on the App Store.' : 'VidShot is coming soon on the App Store. A download link will appear on the home page when it is available.'}</p>
 </Placeholder>
+)}

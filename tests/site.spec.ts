@@ -122,9 +122,12 @@ test("keyboard access, placeholders, guide links and 404", async ({ page }) => {
   }
   for (const path of ["support"]) {
     await page.goto(`/${path}/`);
-    await expect(
-      page.getByText("Placeholder — publication pending"),
-    ).toBeVisible();
+    if (process.env.SUPPORT_EMAIL?.trim()) {
+      await expect(page.getByText("Placeholder — publication pending")).toHaveCount(0);
+      await expect(page.locator(`a[href="mailto:${process.env.SUPPORT_EMAIL.trim()}"]`)).toBeVisible();
+    } else {
+      await expect(page.getByText("Placeholder — publication pending")).toBeVisible();
+    }
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
       "noindex, follow",
@@ -160,12 +163,15 @@ for (const viewport of [
       await expect(
         page.getByRole("heading", { name: policy.title, exact: true }),
       ).toBeVisible();
-      await expect(
-        page.getByText("Pre-launch policy — contact details pending"),
-      ).toBeVisible();
+      const hasContact = Boolean(process.env.SUPPORT_EMAIL?.trim());
+      if (hasContact) {
+        await expect(page.getByText("Pre-launch policy — contact details pending")).toHaveCount(0);
+      } else {
+        await expect(page.getByText("Pre-launch policy — contact details pending")).toBeVisible();
+      }
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
         "content",
-        "noindex, follow",
+        process.env.VERCEL_ENV === "production" && hasContact ? "index, follow" : "noindex, follow",
       );
       expect(
         await page.evaluate(
@@ -193,13 +199,12 @@ for (const viewport of [
       await contents.locator('a[href="#contact"]').focus();
       await page.keyboard.press("Enter");
       await expect(page.locator("#contact h2")).toBeInViewport();
-      await page
-        .locator("#contact")
-        .getByRole("link", { name: "support page" })
-        .click();
-      await expect(
-        page.getByRole("heading", { name: "Support", exact: true }),
-      ).toBeVisible();
+      if (hasContact) {
+        await expect(page.locator("#contact").locator(`a[href="mailto:${process.env.SUPPORT_EMAIL!.trim()}"]`)).toBeVisible();
+      } else {
+        await page.locator("#contact").getByRole("link", { name: "support page" }).click();
+        await expect(page.getByRole("heading", { name: "Support", exact: true })).toBeVisible();
+      }
     });
   }
 }

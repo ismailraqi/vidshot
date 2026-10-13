@@ -50,7 +50,7 @@ If both production settings are missing, a production build fails with instructi
 
 The home page, guide index, and three guides are complete. They are indexable only when `VERCEL_ENV=production` and a production origin is available through either setting. Other builds emit `noindex, follow`, disallow crawling in `robots.txt`, and have an empty sitemap. Previews with a production origin configured still use production canonicals.
 
-Support and the 404 page emit `noindex, follow`. Privacy and terms now contain full pre-launch policy text. While `SUPPORT_EMAIL` is empty, they display a contact-pending notice, stay `noindex`, and are excluded from the sitemap. When a verified contact is configured, their production pages become indexable and enter the sitemap. Preview builds remain excluded throughout. Vercel also sets `X-Robots-Tag` for the unfinished support page.
+Support and the 404 page emit `noindex, follow`. Privacy and terms contain the published policy text. Production and Preview use the owner-confirmed contact `cs.ismailrq@gmail.com` through `SUPPORT_EMAIL`; the provider name is VidShot. The production legal pages are indexable and enter the sitemap. Preview builds remain excluded throughout. The completed support page provides help and contact information; Vercel keeps its `X-Robots-Tag` exclusion. Unconfigured local builds retain contact-pending placeholders instead of inventing an address.
 
 The app schema contains only confirmed fields and all ten shown features. It omits unknown price, ratings, reviews, version, publisher, and minimum OS version. This is truthful Schema.org markup; it does **not** meet Google’s software-app rich-result requirements without confirmed price and review/rating information. See [Google’s software-app guidance](https://developers.google.com/search/docs/appearance/structured-data/software-app).
 
@@ -74,9 +74,9 @@ Vercel supplies `VERCEL_ENV`; do not manually override it in hosted Preview sett
 
 ## Before the app launches
 
-The privacy policy and terms follow the requested browser-policy structure with original wording for VidShot. Their operator and version are in `src/config/legal.ts`; contact links use `SUPPORT_EMAIL`. Supply the verified contact and check these disclosures against the shipping app, including its SDK configuration and App Store privacy answers. No registered address, jurisdiction, or email was invented.
+The privacy policy and terms follow the requested browser-policy structure with original wording for VidShot. Their operator and version are in `src/config/legal.ts`; contact links use `SUPPORT_EMAIL`. On October 13, 2026, the owner confirmed VidShot as the provider name and `cs.ismailrq@gmail.com` for public support and privacy requests. Production and Preview are configured with that address. Keep these disclosures aligned with the shipping app, its SDK configuration, and App Store privacy answers. No registered company, address, or jurisdiction was invented.
 
-Adding an email enables indexing for privacy and terms; it does not complete the separate support page. Finish that page, remove its placeholder/noindex treatment and Vercel header exclusion, and add `/support/` to `finishedRoutes` when ready.
+Adding an email enables indexing for privacy and terms and renders the completed support page. Support remains deliberately excluded from indexing; this does not prevent users or reviewers from accessing its public contact information.
 
 Set the verified App Store URL and switch `LAUNCH_STATUS` to `available` together. Review guide instructions against the released app. Do not add compatibility claims, pricing, ratings, or OS requirements without verification.
 

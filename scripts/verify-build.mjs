@@ -74,6 +74,20 @@ for (const file of [...finished, ...unfinished]) {
     !/href="(?:|#|undefined|null)"/.test(html),
     `${file}: no empty links`,
   );
+  if (legalReady && ["privacy/index.html", "terms/index.html"].includes(file)) {
+    assert.ok(
+      !html.includes("Pre-launch policy") && !html.includes("Draft updated"),
+      `${file}: legal document must be complete`,
+    );
+    assert.ok(
+      html.includes(`href="mailto:${process.env.SUPPORT_EMAIL.trim()}"`),
+      `${file}: verified contact required`,
+    );
+  }
+  if (legalReady && file === "support/index.html") {
+    assert.ok(!html.includes("Placeholder — publication pending"), "Support must provide a finished contact page");
+    assert.ok(html.includes(`href="mailto:${process.env.SUPPORT_EMAIL.trim()}"`), "Support contact required");
+  }
   for (const tag of html.matchAll(/<img\s[^>]+>/g)) {
     assert.ok(
       /\balt=/.test(tag[0]) &&
